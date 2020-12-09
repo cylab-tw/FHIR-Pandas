@@ -1,0 +1,33 @@
+@media (max-width: 768px) {
+    .table-rwd {
+        min-width: 100%;
+    }
+    tr.tr-only-hide {
+        display: none !important;
+    }
+    .table-rwd tr {
+        display: block;
+        border: 1px solid #ddd;
+        margin-top: 5px;
+    }
+
+    .table-rwd td {
+        text-align: left;
+        font-size: 15px;
+        overflow: hidden;
+        width: 100%;
+        display: block;
+    }
+
+    .table-rwd td:before {
+        content: attr(data-th) "：";
+        display: inline-block;
+        font-weight: bold;
+        margin-right: 10px;
+    }
+    .table-rwd.table-bordered td,
+    .table-rwd.table-bordered th,
+    .table-rwd.table-bordered {
+        border: 0;
+    }
+}

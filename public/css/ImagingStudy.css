@@ -1,0 +1,13 @@
+html,body{
+    height: 100%;
+}
+
+#infoField{
+    background-color: gainsboro;
+}
+#seriesField{
+    background-color: whitesmoke;
+    min-height: 500px;
+    overflow: auto;
+    table-layout: fixed;
+}

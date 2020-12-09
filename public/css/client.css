@@ -1,0 +1,22 @@
+html,
+body {
+    height: 100%;
+}
+
+.container-fluid {
+    padding: 1rem 2rem;
+}
+
+#consoleField {
+    background-color: gainsboro;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+#resultField {
+    margin-top: 1rem;
+    background-color: whitesmoke;
+    padding: 1rem;
+    overflow: auto;
+    table-layout: fixed;
+}
