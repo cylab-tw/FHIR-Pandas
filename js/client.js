@@ -3,7 +3,7 @@ ClientApp.controller("ClientCtrl", function ($scope, $location, $window) {
   /* URI variable*/
   $scope.URL = "";
   $scope.httpMethod = "GET";
-  $scope.basePath = "";
+  $scope.basePath = "https://";
   $scope.resource = "Patient";
   $scope.ID = "";
   $scope.Token = "";
@@ -355,6 +355,7 @@ ClientApp.controller("ClientCtrl", function ($scope, $location, $window) {
         $scope.$applyAsync();
       }).catch(function (error) {
         console.log('ERROR: ', error.message);
+        alert('Operation Failed');
         $scope.ErrorInfo = error.message;
         $scope.resultEntry = "";
         $scope.prevPage = "";
