@@ -478,11 +478,11 @@
                                     <th>No.</th>
                                     <th>ID</th>
                                     <th>Identifier</th>
-                                    <th>Active</th>
-                                    <th>Name</th>
-                                    <th>Gender</th>
-                                    <th>BirthDate</th>
-                                    <th>Organization</th>
+                                    <th>Status</th>
+                                    <th>Code</th>
+                                    <th>Subject</th>
+                                    <th>Result</th>
+                                    <th>imagingStudy</th>
                                     <th>Operate</th>
                                 </tr>
                                 <tr class="tr-only-hide" ng-show="displayMode=='Identifier'">
@@ -498,13 +498,13 @@
                             <tbody>
                                 <tr ng-show="displayMode=='Patient'" ng-repeat="Item in resultEntry">
                                     <td data-th="No.">{{ $index + 1 +pageNum}}</td>
-                                    <td data-th="ID">{{(Item.resource.id)?(Item.resource.id):'-'}}</td>
+                                    <td data-th="ID"><a href="{{Item.fullUrl}}" target="_blank">{{(Item.resource.id)?(Item.resource.id):'-'}}</a></td>
                                     <td data-th="Identifier"><button type="button" class="btn btn-sm" ng-class="{'true':'btn-success','false':'btn-outline-secondary'}[Item.resource.identifier.length>0]" ng-disabled="!Item.resource.identifier" ng-click="showIdentifier(Item.resource.identifier);">{{(Item.resource.identifier.length)?(Item.resource.identifier.length):'0'}} Data</button></th>
-                                    <td data-th="Active">{{(Item.resource.active)?(Item.resource.active):'-'}}</td>
-                                    <td data-th="Name">{{(Item.resource.name[0].text)?(Item.resource.name[0].text):'-'}}</td>
-                                    <td data-th="Gender">{{(Item.resource.gender)?(Item.resource.gender):'-'}}</td>
-                                    <td data-th="BirthDate">{{(Item.resource.birthDate)?(Item.resource.birthDate):'-'}}</td>
-                                    <td data-th="Organization">{{(Item.resource.managingOrganization.reference)?(Item.resource.managingOrganization.reference):'-'}}</td>
+                                    <td data-th="Status">{{(Item.resource.status)?(Item.resource.status):'-'}}</td>
+                                    <td data-th="Code" ng-bind-html="parseCode(Item.resource.code) | mysce"><!--{(Item.resource.code)?():'-'}--></td>
+                                    <td data-th="Subject">{{(Item.resource.subject.reference)?(Item.resource.subject.reference):'-'}}</td>
+                                    <td data-th="Result">{{(Item.resource.result.reference)?(Item.resource.result.reference):'-'}}</td>
+                                    <td data-th="imagingStudy">{{(Item.resource.imagingStudy.reference)?(Item.resource.imagingStudy.reference):'-'}}</td>
                                     <td data-th="Operate">
                                         <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#EditModel" ng-click="showResource(Item);"><i class="far fa-edit"></i></button>
                                         <button type="button" class="btn btn-sm btn-danger" ng-click="HttpReq('DELETE',Item.fullUrl)"><i class="far fa-trash-alt"></i></button>
@@ -565,7 +565,7 @@
     <script type="text/javascript" src="./js/bootstrap/bootstrap-select-1.13.14/dist/js/bootstrap-select.min.js"></script>
     <script type="text/javascript" src="./js/bootstrap/bootstrap-select-1.13.14/dist/js/i18n/defaults-zh_TW.min.js"></script>
     <script type="text/javascript" src="./js/angularjs/angular.min.js"></script>
-    <script type="text/javascript" src="./js/client.js"></script>
+    <script type="text/javascript" src="./js/client_DiagnosticReport.js"></script>
 </body>
 
 </html>
