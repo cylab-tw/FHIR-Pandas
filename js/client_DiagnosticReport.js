@@ -534,7 +534,7 @@ ClientApp.controller("ClientCtrl", function ($scope, $location, $window) {
     resource_link = url.split('/fhir')
     if (resource_link.length > 1) {
       resource_link.shift() // remove first
-      return `${$scope.basePath}/fhir${resource_link.join('/fhir')}`
+      return `${$scope.basePath}${resource_link.join('/fhir')}`
     }else{
       return url
     }
