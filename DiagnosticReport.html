@@ -498,11 +498,11 @@
                             <tbody>
                                 <tr ng-show="displayMode=='Patient'" ng-repeat="Item in resultEntry">
                                     <td data-th="No.">{{ $index + 1 +pageNum}}</td>
-                                    <td data-th="ID"><a href="{{Item.fullUrl}}" target="_blank">{{(Item.resource.id)?(Item.resource.id):'-'}}</a></td>
+                                    <td data-th="ID"><a href="{{buildFhirLink(Item.fullUrl)}}" target="_blank">{{(Item.resource.id)?(Item.resource.id):'-'}}</a></td>
                                     <td data-th="Identifier"><button type="button" class="btn btn-sm" ng-class="{'true':'btn-success','false':'btn-outline-secondary'}[Item.resource.identifier.length>0]" ng-disabled="!Item.resource.identifier" ng-click="showIdentifier(Item.resource.identifier);">{{(Item.resource.identifier.length)?(Item.resource.identifier.length):'0'}} Data</button></th>
                                     <td data-th="Status">{{(Item.resource.status)?(Item.resource.status):'-'}}</td>
                                     <td data-th="Code" ng-bind-html="parseCode(Item.resource.code) | mysce"><!--{(Item.resource.code)?():'-'}--></td>
-                                    <td data-th="Subject">{{(Item.resource.subject.reference)?(Item.resource.subject.reference):'-'}}</td>
+                                    <td data-th="Subject"><a href="{{basePath+'/'+Item.resource.subject.reference}}" target="_blank">{{(Item.resource.subject.reference)?(Item.resource.subject.reference):'-'}}</a></td>
                                     <td data-th="Result">{{(Item.resource.result.reference)?(Item.resource.result.reference):'-'}}</td>
                                     <td data-th="imagingStudy">{{(Item.resource.imagingStudy.reference)?(Item.resource.imagingStudy.reference):'-'}}</td>
                                     <td data-th="Operate">

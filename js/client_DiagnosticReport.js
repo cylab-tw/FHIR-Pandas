@@ -30,7 +30,7 @@ ClientApp.controller("ClientCtrl", function ($scope, $location, $window) {
   $scope.sortDirection = true;
   /* Other variable*/
   $scope.toolsIsOpen = true;
-  $scope.displayMode = '';  
+  $scope.displayMode = '';
   $scope.CommonSearchParametersList = [{
     Name: "_content",
     Type: "string",
@@ -518,21 +518,30 @@ ClientApp.controller("ClientCtrl", function ($scope, $location, $window) {
     $scope.bodyData = JSON.stringify(example, null, 4);
   }
 
-  $scope.parseCode = function (data){
-    
+  $scope.parseCode = function (data) {
     html_text = data.text
     coding_list = []
-    for(coding of data.coding){
-      coding_list.push(`<li><a href='${coding.system}' target='_blank'>${coding.code}<a/></li>`)
+    for (coding of data.coding) {
+      coding_list.push(`<li><a href='${coding.system}/${coding.code}' target='_blank'>${coding.code}<a/></li>`)
     }
-    if(coding_list.length > 0){
+    if (coding_list.length > 0) {
       html_text += `<br/><ui>${coding_list.join('')}</ui>`
     }
     return html_text
   }
-}).filter('mysce',function($http, $q, $log, $sce){
+
+  $scope.buildFhirLink = function (url) {
+    resource_link = url.split('/fhir')
+    if (resource_link.length > 1) {
+      resource_link.shift() // remove first
+      return `${$scope.basePath}/fhir${resource_link.join('/fhir')}`
+    }else{
+      return url
+    }
+  }
+}).filter('mysce', function ($http, $q, $log, $sce) {
   // https://stackoverflow.com/questions/46280306/use-service-function-with-ng-bind-html-in-angularjs
-  return function(text){
+  return function (text) {
     return $sce.trustAsHtml(text);
   }
 });
