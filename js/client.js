@@ -30,7 +30,7 @@ ClientApp.controller("ClientCtrl", function ($scope, $location, $window) {
   $scope.sortDirection = true;
   /* Other variable*/
   $scope.toolsIsOpen = true;
-  $scope.displayMode = '';  
+  $scope.displayMode = '';
   $scope.CommonSearchParametersList = [{
     Name: "_content",
     Type: "string",
@@ -193,7 +193,6 @@ ClientApp.controller("ClientCtrl", function ($scope, $location, $window) {
   $scope.prefixesList = { eq: '=', ne: '≠', gt: '>', lt: '<', ge: '>=', le: '<=', sa: 'Start_After', eb: 'End_Before', ap: 'Approximately' };
   $scope.stringModifier = { '': 'Default', 'contains': 'Contains', 'exact': 'Exact' };
   $scope.tokenModifier = { '': 'Default', 'text': 'Text', 'not': 'Not', 'above': 'Above', 'below': 'Below', 'in': 'In', 'not-in': 'Not-in', 'of-type': 'Of-type' };
-
   $(function () {
     $('.selectpicker').selectpicker();
   });
@@ -254,7 +253,12 @@ ClientApp.controller("ClientCtrl", function ($scope, $location, $window) {
         },
         method
       }
-      if ($scope.Token) options.headers.Authorization = "Bearer " + $scope.Token;
+      /* Add token */
+      // For bearer token
+      //if ($scope.Token) options.headers.Authorization = "Bearer " + $scope.Token;
+      // For API key
+      if ($scope.Token) options.headers.apikey = $scope.Token;
+      console.log($scope.Token)
       fetch(URL, options).then(response => {
         Response = response;
         $scope.httpResult = method + "：HTTP " + response.status + " " + response.statusText;
