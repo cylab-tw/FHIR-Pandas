@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Vanilla Panda</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <link rel="icon" href="../img/RedPanda.jpg">
+</head>
+
+<body>
+    <!-- Base setting-->
+    <li>FHIR server：<input type="text" id='fhirServer' value="https://hapi.fhir.tw/fhir" onchange="init()"></li>
+    <li>Resource：<input type="text" id='fhirResource' value="Patient" onchange="init()"></li>
+    <li>Token：<input type="text" id='fhirToken' value="" onchange="init()"></li>
+    <li>Method：<select id="requestMethod" onchange="changeMethod()">
+            <option value="get" default>GET</option>
+            <option value="post">POST</option>
+            <option value="put">PUT</option>
+            <option value="delete">DELETE</option>
+        </select>
+    </li>
+    <!-- For GET-->
+    <div id="queryTable" style="width: 100%; display: block">
+        <li>Query：<br />
+            <table id="queryParams_display">
+                <tr>
+                    <th>Key</th>
+                    <th>Value</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td><input id='queryKey' type="text"></td>
+                    <td><input id='queryValue' type="text"></td>
+                    <td><button onclick="addQueryParam()">+</button></td>
+                </tr>
+            </table>
+        </li>
+    </div>
+    <!-- For POST, PUT-->
+    <div id="dataTable" style="width: 100%; display:none">
+        Data：<br />
+        <textarea id="data" style="width: 50%; height: 300px; background-color: gainsboro;"></textarea>
+        <button onclick="document.getElementById('data').value=''">Clear</button>
+    </div><br />
+    <button onclick="location.reload()">RESET</button>
+    <button id="request" onclick="request()">GO</button>
+    <hr>
+    <!-- Result -->
+    <h3><span id="requestMethod_display">GET</span>：<a id="requestURL" target="_blank" href=""></a></h3>
+    <textarea id="content" style="width: 100%; height: 500px; background-color: whitesmoke;"></textarea>
+</body>
+<script src="../js/fhirRequest.js"></script>
+<script src="../js/vanillaPanda.js"></script>
+
+</html>

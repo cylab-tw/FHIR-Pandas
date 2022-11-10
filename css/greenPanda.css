@@ -1,0 +1,36 @@
+html,
+body {
+    height: 100%;
+}
+
+#icon {
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
+#settingTable {}
+
+#settingLogo {
+    width: 13rem;
+}
+
+#settingBar {
+    width: calc(100% - 20rem);
+}
+
+#settingBtns {
+    width: 20rem;
+}
+
+#resultTable {}
+
+[v-cloak] {
+    display: none;
+}
+
+#btn-back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+}

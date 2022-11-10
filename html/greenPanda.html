@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Icon -->
+    <title>RedPanda2</title>
+    <!-- CSS -->
+    <link href="../css/external/boostrap-5.2.0/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/external/MDB5-STANDARD-UI-KIT-Free-5.0.0/mdb.min.css" rel="stylesheet" />
+    <link href="../css/external/fontawesome-free-6.2.0-web/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/external/fontawesome-free-6.2.0-web/brands.min.css" rel="stylesheet">
+    <link href="../css/external/fontawesome-free-6.2.0-web/solid.min.css" rel="stylesheet">
+    <link href="../css/external/sweetalert2.min.css" rel="stylesheet">
+    <link href="../css/greenPanda.css" rel="stylesheet">
+    <link rel="icon" href="../img/RedPanda.jpg">
+</head>
+
+<body>
+    <div id="app" class="container-fluid h-100 px-0" v-cloak>
+        <!-- settingTable -->
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <div class="container-fluid">
+                <!-- Logo -->
+                <div class="navbar-brand">
+                    <div id='settingLogo' class="d-inline-block" onclick="location.href=location.origin + location.pathname">
+                        <img id='icon' src="../img/RedPanda.jpg" class="rounded me-1">
+                        <h2 class="text-danger fw-bold d-inline align-bottom">RedPanda</h2>
+                    </div>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa-regular fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- For desktop -->
+                    <div id='settingBar' class="d-none d-md-block me-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control rounded-start" v-model="requestURL" disabled placeholder="Please set search settings...">
+                            <button id="searchBtn" class="btn btn-success rounded-end" type="button" data-mdb-ripple-color="dark" @click="getFHIR()">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id='settingBtns' class="d-none d-md-block">
+                        <ul class="nav nav-tabs nav-fill" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link p-3" id="settingBtns-tab-1" data-mdb-toggle="offcanvas" data-mdb-target="#SearchParamOffcanvas" role="tab" aria-controls="settingBtns-tabs-1" aria-selected="true">
+                                    <i class="fa-regular fa-gear me-2"></i>Setting
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link p-3" id="settingBtns-tab-2" data-mdb-toggle="offcanvas" data-mdb-target="#DisplaySettingOffcanvas" role="tab" aria-controls="settingBtns-tabs-3" aria-selected="false">
+                                    <i class="fa-solid fa-list me-2"></i>Display
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link p-3" id="settingBtns-tab-3" data-mdb-toggle="modal" data-mdb-target="#CreateModal" role="tab" aria-controls="settingBtns-tabs-2" aria-selected="false">
+                                    <i class="fa-regular fa-file-circle-plus me-2"></i>Create
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- For mobile -->
+                    <div class="d-md-none me-2">
+                        <div class="input-group mt-2">
+                            <input type="text" class="form-control rounded-start" v-model="requestURL" disabled placeholder="Please set search settings...">
+                            <button id="searchBtn" class="btn btn-success rounded-end" type="button" data-mdb-ripple-color="dark" @click="getFHIR()">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="d-md-none">
+                        <ul class="nav nav-tabs nav-fill" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link p-3" id="settingBtns-tab-1" data-mdb-toggle="offcanvas" data-mdb-target="#SearchParamOffcanvas" role="tab" aria-controls="settingBtns-tabs-1" aria-selected="true">
+                                    <i class="fa-regular fa-gear me-2"></i>Setting
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link p-3" id="settingBtns-tab-2" data-mdb-toggle="offcanvas" data-mdb-target="#DisplaySettingOffcanvas" role="tab" aria-controls="settingBtns-tabs-3" aria-selected="false">
+                                    <i class="fa-solid fa-list me-2"></i>Display
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link p-3" id="settingBtns-tab-3" data-mdb-toggle="modal" data-mdb-target="#CreateModal" role="tab" aria-controls="settingBtns-tabs-2" aria-selected="false">
+                                    <i class="fa-regular fa-file-circle-plus me-2"></i>Create
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- resultTable -->
+        <div id="resultTable" class="text-center rounded bg-light px-3">
+            <div class="row">
+                <!-- Console -->
+                <!-- for desktop -->
+                <div class="col-12 mb-2 d-none d-md-block pt-4" v-if="requestStatus">
+                    <h3 class="float-start">
+                        {{requestStatus.resource}}：<span class="text-uppercase">{{requestStatus.method}} {{requestStatus.status}}</span>
+                    </h3>
+                    <a class="btn btn-sm btn-info float-start ms-3" :href="requestStatus.url" target="_blank">
+                        <i class="fa-regular fa-up-right-from-square me-2"></i>View
+                    </a>
+                    <button class="btn btn-sm btn-primary float-start ms-2" @click="downLoadJSON(-1, setting.resource)" :class="{'disabled': Object.keys(requestResult).length==0}">
+                        <i class="fa-solid fa-download me-2"></i>download
+                    </button>
+                    <div class="btn-group btn-group-sm float-end ms-2">
+                        <button class="btn btn-secondary fw-bold" :disabled="!requestStatus.link.previous" @click="getFHIR(requestStatus.link.previous)"><i class="fa-solid fa-angle-left me-1"></i>Prev</button>
+                        <button class="btn btn-outline-secondary fw-bold" :disabled="!requestStatus.link.self" @click="getFHIR(requestStatus.link.self)">{{requestStatus.page.now}} / {{requestStatus.page.total}}</button>
+                        <button class="btn btn-secondary fw-bold" :disabled="!requestStatus.link.next" @click="getFHIR(requestStatus.link.next)">Next<i class="fa-solid fa-angle-right ms-1"></i></button>
+                    </div>
+                    <strong class="float-end mt-1">Total {{(requestResult.total) ? (requestResult.total) : '0'}} rows</strong>
+                </div>
+                <!-- for mobile -->
+                <div class="col-12 mb-2 d-md-none pt-2" v-if="requestStatus">
+                    <div class="row">
+                        <div class="col-12">
+                            {{requestStatus.resource}}：<span class="text-uppercase">{{requestStatus.method}} {{requestStatus.status}}</span>
+                            <small>( total {{(requestResult.total) ? (requestResult.total) : '0'}} rows )</small>
+                        </div>
+                        <div class="col-12 mb-2 text-center">
+                            <a class="btn btn-sm btn-info" :href="requestStatus.url" target="_blank">
+                                <i class="fa-regular fa-up-right-from-square me-2"></i>View
+                            </a>
+                            <button class="btn btn-sm btn-primary ms-1" @click="downLoadJSON(-1, setting.resource)">
+                                <i class="fa-solid fa-download me-2"></i>download
+                            </button>
+                        </div>
+                        <div class="col-12 mb-2 text-center">
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-secondary fw-bold" :disabled="!requestStatus.link.previous" @click="getFHIR(requestStatus.link.previous)"><i class="fa-solid fa-angle-left me-1"></i>Prev</button>
+                                <button class="btn btn-outline-secondary fw-bold" :disabled="!requestStatus.link.self" @click="getFHIR(requestStatus.link.self)">{{requestStatus.page.now}} / {{requestStatus.page.total}}</button>
+                                <button class="btn btn-secondary fw-bold" :disabled="!requestStatus.link.next" @click="getFHIR(requestStatus.link.next)">Next<i class="fa-solid fa-angle-right ms-1"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Display -->
+                <div class="col-12">
+                    <div v-html="resultDisplay"></div>
+                </div>
+                <!-- Error info-->
+                <div class="col-12" v-if="requestStatus && requestStatus.errorInfo">
+                    <div class="alert alert-danger" v-for="err of requestStatus.errorInfo">
+                        <i class="fa-regular fa-circle-exclamation me-2"></i>
+                        <strong class="text-capitalize">{{err.code}}</strong>
+                        <strong class="text-uppercase ms-1">{{err.severity}}：</strong>
+                        <span v-html="err.diagnostics"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- SearchParamOffcanvas -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="SearchParamOffcanvas">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="exampleModalLabel">Search Setting</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <label class="col-form-label col-form-label-sm fw-bold">Server</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control form-control-sm" v-model="setting.server" @change="upFhirServer">
+                                <button class="btn btn-sm btn-outline-secondary" @click="setting.server=''"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="col-form-label col-form-label-sm fw-bold">Resource / ID</label>
+                            <div class="input-group">
+                                <select class="form-control form-control-sm toggle" v-model="setting.resource" @change="setting.id='';searchParameter.list=[];displayParameter._sort={key: '',order: true}">
+                                    <option v-for='resource in resourceList'>{{resource}}</option>
+                                </select>
+                                <input type="text" class="form-control form-control-sm" v-model="setting.id" @change="upFhirServer">
+                                <button class="btn btn-sm btn-outline-secondary" @click="setting.id=''"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="col-form-label col-form-label-sm fw-bold">Token</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control form-control-sm" v-model="setting.token" @change="upFhirServer">
+                                <label class="btn btn-sm btn-outline-secondary" @click="setting.token=''"><i class="fa-solid fa-xmark"></i></label>
+                            </div>
+                        </div>
+                        <!-- Setting paramters -->
+                        <div class="col-12">
+                            <label class="col-form-label col-form-label-sm fw-bold">Parameters：</label>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group">
+                                <!-- Key -->
+                                <select class="form-control" v-model="searchParameter.key" :disabled="setting.id!=''" data-bs-toggle="tooltip" :title="getParameterType(setting.resource,searchParameter.key)">
+                                    <option class='d-none' value="" default>Choose...</option>
+                                    <optgroup :label="setting.resource">
+                                        <option v-for="opt in Object.keys(config.SearchParameter[setting.resource])" data-bs-toggle="tooltip" data-bs-placement="top" :title="config.SearchParameter[setting.resource][opt].description">{{opt}}</option>
+                                    </optgroup>
+                                    <optgroup label="Common">
+                                        <option v-for="opt in Object.keys(config.SearchParameter['_common'])" data-bs-toggle="tooltip" data-bs-placement="top" :title="config.SearchParameter['_common'][opt].description">{{opt}}</option>
+                                    </optgroup>
+                                </select>
+                                <!-- Modifier  -->
+                                <button class="btn btn-sm btn-outline-secondary" data-mdb-toggle="dropdown" :disabled="setting.id!=''" v-html="searchParameter.modifier.display">
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <button class="dropdown-item" @click="searchParameter.modifier=searchParameter.modifierDefault">None</button>
+                                    </li>
+                                    <li v-for="(attr, key) in getParameterModifier(setting.resource ,searchParameter.key)">
+                                        <button class="dropdown-item" @click="searchParameter.modifier=attr" data-bs-toggle="tooltip" :title="attr.description" v-html="attr.display"></button>
+                                    </li>
+                                </ul>
+                                <!-- Value -->
+                                <input type="number" class="form-control" v-model="searchParameter.value" :disabled="setting.id!=''" v-if="getParameterType(setting.resource,searchParameter.key)=='number'">
+                                <input type="date" class="form-control" v-model="searchParameter.value" :disabled="setting.id!=''" v-else-if="getParameterType(setting.resource,searchParameter.key)=='date'">
+                                <input type="text" class="form-control" v-model="searchParameter.value" :disabled="setting.id!=''" v-else=>
+                                <!-- Add buttoon -->
+                                <button type="button" class="btn btn-sm btn-success" @click="addSearchParameter()" :disabled="setting.id!=''">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Paramters table-->
+                        <div class="col-12 mt-3" v-for="(param, index) in searchParameter.list" v-if="setting.id==''">
+                            <div class="input-group">
+                                <!-- Key -->
+                                <select class="form-control" v-model="param.key">
+                                    <option class='d-none' value="" default>Choose...</option>
+                                    <optgroup :label="setting.resource">
+                                        <option v-for="opt in Object.keys(config.SearchParameter[setting.resource])" data-bs-toggle="tooltip" data-bs-placement="top" :title="config.SearchParameter[setting.resource][opt].description">{{opt}}</option>
+                                    </optgroup>
+                                    <optgroup label="Common">
+                                        <option v-for="opt in Object.keys(config.SearchParameter['_common'])" data-bs-toggle="tooltip" data-bs-placement="top" :title="config.SearchParameter['_common'][opt].description">{{opt}}</option>
+                                    </optgroup>
+                                </select>
+                                <!-- Modifier  -->
+                                <button class="btn btn-sm btn-outline-secondary" data-mdb-toggle="dropdown" v-html="param.modifier.display">
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <button class="dropdown-item" @click="param.modifier=searchParameter.modifierDefault">None</button>
+                                    </li>
+                                    <li v-for="(attr, key) in getParameterModifier(setting.resource ,param.key)">
+                                        <button class="dropdown-item" @click="param.modifier=attr" data-bs-toggle="tooltip" :title="attr.description" v-html="attr.display"></button>
+                                    </li>
+                                </ul>
+
+                                <!-- Value -->
+                                <input type="number" class="form-control" v-model="param.value" :disabled="setting.id!=''" v-if="getParameterType(setting.resource,param.key)=='number'">
+                                <input type="date" class="form-control" v-model="param.value" :disabled="setting.id!=''" v-else-if="getParameterType(setting.resource,param.key)=='date'">
+                                <input type="text" class="form-control" v-model="param.value" :disabled="setting.id!=''" v-else=>
+                                <!-- Remove buttoon -->
+                                <button type="button" class="btn btn-sm btn-danger" @click="rmSearchParameter(index)"><i class="fa-solid fa-minus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- DisplaySettingOffcanvas -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="DisplaySettingOffcanvas">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="exampleModalLabel">Display Setting</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <label class="col-form-label col-form-label-sm fw-bold">Display rows：{{displayParameter._count}}</label>
+                            <div class="input-group">
+                                <input type="range" class="form-range" min="1" max="200" v-model="displayParameter._count">
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="col-form-label col-form-label-sm fw-bold">Sort by</label>
+                            <div class="input-group">
+                                <select class="form-control" v-model="displayParameter._sort.key">
+                                    <option value="" default>None</option>
+                                    <option v-for="opt in Object.keys(config.SearchParameter[setting.resource])" data-bs-toggle="tooltip" data-bs-placement="top" :title="config.SearchParameter[setting.resource][opt].description">{{opt}}</option>
+                                </select>
+                                <button class="btn btn-primary px-3" type="button" data-mdb-ripple-color="dark" @click="displayParameter._sort.order=!displayParameter._sort.order">
+                                    <i class="fa-regular fa-arrow-up-a-z" v-if="displayParameter._sort.order"></i>
+                                    <i class="fa-regular fa-arrow-down-z-a" v-if="!displayParameter._sort.order"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Setting paramters -->
+                        <div class="col-12">
+                            <label class="col-form-label col-form-label-sm fw-bold">Other</label>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group">
+                                <select class="form-control" v-model="displayParameter.key" required>
+                                    <option class='d-none' value="" default>Choose...</option>
+                                    <option v-for="opt in Object.keys(config.SearchParameter['_result'])" data-bs-toggle="tooltip" data-bs-placement="top" :title="config.SearchParameter['_result'][opt].description">{{opt}}</option>
+                                </select>
+                                <button class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-equals"></i></button>
+                                <input type="text" class="form-control" v-model="displayParameter.value" required>
+                                <button type="submit" class="btn btn-sm btn-success" @click="addDisplayParameter()"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <!-- Display paramters -->
+                        <div class="col-12 mt-3" v-for="(param, index) in displayParameter.list">
+                            <div class="input-group">
+                                <input type="text" class="form-control form-control-sm" v-model="param.key" readonly>
+                                <button class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-equals"></i></button>
+                                <input type="text" class="form-control form-control-sm" v-model="param.value">
+                                <button class="btn btn-sm btn-danger" @click="rmDisplayParameter()"><i class="fa-solid fa-minus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ViewModal -->
+        <div class="modal fade" id="ViewModal" tabindex="-1">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" v-html="viewModal.title"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-flued">
+                            <div class="row">
+                                <div class="col-12 mb-2">
+                                    <!-- Tabs navs -->
+                                    <ul class="nav nav-tabs mb-3" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="viewModalNavTab_table" data-mdb-toggle="tab" data-mdb-target="#viewModalNavTable" role="tab">
+                                                <i class="fa-regular fa-table me-2"></i>Table
+                                            </button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="viewModalNavTab_json" data-mdb-toggle="tab" data-mdb-target="#viewModalNavJson" role="tab">
+                                                <i class="fa-regular fa-list-ul me-2"></i>Json
+                                            </button>
+                                        </li>
+                                        <li class="nav-item" role="presentation" :class="{'d-none':!viewModal.editData}">
+                                            <button class="nav-link" id="viewModalNavTab_edit" data-mdb-toggle="tab" data-mdb-target="#viewModalNavEdit" role="tab">
+                                                <i class="fa-regular fa-pen-to-square me-2"></i>Edit
+                                            </button>
+                                        </li>
+                                    </ul>
+                                    <!-- Tabs navs -->
+                                    <!-- Tabs content -->
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active table-responsive" id="viewModalNavTable" v-html='viewModal.table'></div>
+                                        <div class="tab-pane fade" id="viewModalNavJson">
+                                            <pre class='text-start bg-light p-2' v-html="viewModal.data"></pre>
+                                        </div>
+                                        <div class="tab-pane fade" id="viewModalNavEdit" :class="{'d-none':!viewModal.editData}">
+                                            <button class="btn btn-sm btn-info float-start mb-2" @click="viewModal.editData = jsonToStr(viewModal.editData)"><i class="fa-regular fa-align-justify me-2"></i>Format</button>
+                                            <button class="btn btn-sm btn-primary float-start mb-2 ms-2" onclick="viewModalImportFile.click()"><i class="fa-regular fa-file-import me-2"></i>Import</button>
+                                            <input type="file" class="d-none" id="viewModalImportFile" accept="application/json" @change="importViewModalJSON" />
+                                            <button class="btn btn-sm btn-success float-end mb-2 ms-2" @click="putFHIR(viewModal.data, viewModal.editData)"><i class="fa-regular fa-check me-2"></i>Update</button>
+                                            <button class="btn btn-sm btn-warning float-end mb-2" @click="viewModal.editData = JSON.stringify(viewModal.data, null, 4)"><i class="fa-regular fa-rotate-right me-2"></i>Reset</button>
+                                            <textarea class="form-control bg-light" rows="20" v-model='viewModal.editData'></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12" v-html="viewModal.body"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- CreateModal-->
+        <div class="modal fade" id="CreateModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Create data</h5>
+                        <button type="button" class="btn-close" data-mdb-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-flued">
+                            <div class="row gx-3">
+                                <div class="col-12 col-md-4 mb-3">
+                                    <label class="col-form-label col-form-label-sm fw-bold">Server</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control form-control-sm" v-model="setting.server" @change="upFhirServer">
+                                        <button class="btn btn-sm btn-outline-secondary" @click="setting.server=''"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 mb-3">
+                                    <label class="col-form-label col-form-label-sm fw-bold">Resource / ID</label>
+                                    <div class="input-group">
+                                        <select class="form-control form-control-sm toggle" v-model="setting.resource" @change="searchParameter.list=[];displayParameter._sort={key: '',order: true}">
+                                            <option v-for='resource in resourceList'>{{resource}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 mb-3">
+                                    <label class="col-form-label col-form-label-sm fw-bold">Token (optional)</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control form-control-sm" v-model="setting.token" @change="upFhirServer">
+                                        <label class="btn btn-sm btn-outline-secondary" @click="setting.token=''"><i class="fa-solid fa-xmark"></i></label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label class="col-form-label col-form-label-sm fw-bold">Data</label>
+                                    <button class="btn btn-sm btn-link float-start ms-2 float-end p-2" @click="createModal.data = ''"><i class="fa-regular fa-trash-can me-2"></i>Clear</button>
+                                    <button class="btn btn-sm btn-link float-start ms-2 float-end p-2" @click="createModal.data = jsonToStr(createModal.data)"><i class="fa-regular fa-align-justify me-2"></i>Format</button>
+                                    <button class="btn btn-sm btn-link float-start float-end p-2" onclick="createModalImportFile.click()"><i class="fa-regular fa-file-import me-2"></i>Import</button>
+                                    <input type="file" class="d-none" id="createModalImportFile" accept="application/json" @change="importCreateModalJSON" />
+                                    <textarea class="form-control bg-light" rows="10" v-model='createModal.data'></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-success" @click="postFHIR()" :class="{'disabled': !createModal.data}">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Other -->
+    <button id="btn-back-to-top" class="btn btn-warning btn-floating"><i class="fa-regular fa-arrow-up"></i></button>
+    <!-- Scripts -->
+    <script type="text/javascript" src="../js/external/bootstrap-5.2.0/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../js/external/MDB5-STANDARD-UI-KIT-Free-5.0.0/mdb.min.js"></script>
+    <script type="text/javascript" src="../js/external/fontawesome-free-6.2.0-web/fontawesome.min.js"></script>
+    <script type="text/javascript" src="../js/external/fontawesome-free-6.2.0-web/brands.min.js"></script>
+    <script type="text/javascript" src="../js/external/fontawesome-free-6.2.0-web/solid.min.js"></script>
+    <script type="text/javascript" src="../js/external/sweetalert2.all.min.js"></script>
+    <script type="text/javascript" src="../js/external/axios/axios.min.js"></script>
+    <script type="text/javascript" src="../js/external/vue.min.js"></script>
+    <script type="module" src="../js/greenPanda.js"></script>
+</body>
+
+</html>
