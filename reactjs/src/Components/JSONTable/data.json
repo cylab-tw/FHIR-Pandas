@@ -1,0 +1,197 @@
+[
+    {
+        "resourceType": "Encounter",
+        "id": "enc-example",
+        "meta": {
+            "profile": ["https://twcore.mohw.gov.tw/fhir/StructureDefinition/Encounter-twcore"]
+        },
+        "text": {
+            "status": "generated",
+            "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><h3><b>就醫資料</b></h3><p><b>識別碼</b>：E22081702</p><p><b>就醫現況</b>：finished</p><p><b>就醫分類</b>：pre-admission <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\">( <a href=\"http://terminology.hl7.org/3.1.0/ValueSet-v3-ActEncounterCode.html\">ActEncounterCode</a>#PRENC)</span></p><p><b>就醫型別</b>：Annual diabetes mellitus screening <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\">( <a href=\"http://terminology.hl7.org/3.1.0/CodeSystem-encounter-type.html\">Encounter type</a>#ADMS)</span></p><p><b>服務型別</b>：糖尿病(Diabetes) <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\">( <a href=\"http://terminology.hl7.org/3.1.0/CodeSystem-service-type.html\">Service type</a>#318)</span></p><p><b>病人</b>：<a href=\"Patient-pat-example.html\">Patient/pat-example</a> \"陳加玲\"</p><p><b>出院後的地點</b>：Home <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\">( <a href=\"http://terminology.hl7.org/3.1.0/CodeSystem-discharge-disposition.html\">Discharge disposition</a>#home)</span></p><p><b>就醫發生的地點</b>：<a href=\"Location-hospital-example.html\">Location/hospital-example</a> \"衛生福利部臺北醫院\"</p><h3>參與就醫的健康照護服務提供人員</h3><table class=\"grid\"><tr><td>-</td><td><b>角色</b></td><td><b>參與時段</b></td><td><b>參與人</b></td></tr><tr><td>*</td><td>primary performer <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\">( <a href=\"http://terminology.hl7.org/3.1.0/CodeSystem-v3-ParticipationType.html\">ParticipationType</a>#PPRF)</span></td><td>2022-08-01 05:00:14-0500 --&gt; 2022-08-01 06:00:14-0500</td><td><a href=\"Practitioner-pra-example.html\">Practitioner/pra-example</a> \"王依昇\"</td></tr></table><p><b>就醫的開始和結束時間</b>：2022-08-01 05:00:14-0500 --&gt; 2022-08-01 06:00:14-0500</p><p><b>就醫原因</b>：FH: Diabetes mellitus <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\">( <a href=\"https://browser.ihtsdotools.org/\">SNOMED CT</a>#160303001)</span></p></div>"
+        },
+        "identifier": [
+            {
+                "system": "http://healthcare.example.org/identifiers/enocunter",
+                "value": "E22081702"
+            }
+        ],
+        "status": "finished",
+        "class": {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+            "code": "PRENC"
+        },
+        "type": [
+            {
+                "coding": [
+                    {
+                        "system": "http://terminology.hl7.org/CodeSystem/encounter-type",
+                        "code": "ADMS"
+                    }
+                ]
+            }
+        ],
+        "serviceType": {
+            "coding": [
+                {
+                    "system": "http://terminology.hl7.org/CodeSystem/service-type",
+                    "code": "318",
+                    "display": "Diabetes"
+                }
+            ],
+            "text": "糖尿病"
+        },
+        "subject": {
+            "reference": "Patient/pat-example"
+        },
+        "participant": [
+            {
+                "type": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://terminology.hl7.org/CodeSystem/v3-ParticipationType",
+                                "code": "PPRF"
+                            }
+                        ]
+                    }
+                ],
+                "period": {
+                    "start": "2022-08-01T17:00:14-05:00",
+                    "end": "2022-08-01T18:00:14-05:00"
+                },
+                "individual": {
+                    "reference": "Practitioner/pra-example"
+                }
+            }
+        ],
+        "period": {
+            "start": "2022-08-01T17:00:14-05:00",
+            "end": "2022-08-01T18:00:14-05:00"
+        },
+        "reasonCode": [
+            {
+                "coding": [
+                    {
+                        "system": "http://snomed.info/sct",
+                        "code": "160303001",
+                        "display": "FH: Diabetes mellitus"
+                    }
+                ]
+            }
+        ],
+        "hospitalization": {
+            "dischargeDisposition": {
+                "coding": [
+                    {
+                        "system": "http://terminology.hl7.org/CodeSystem/discharge-disposition",
+                        "code": "home"
+                    }
+                ]
+            }
+        },
+        "location": [
+            {
+                "location": {
+                    "reference": "Location/hospital-example"
+                }
+            }
+        ]
+    },  {
+        "resourceType": "Encounter",
+        "id": "enc-example",
+        "meta": {
+            "profile": ["https://twcore.mohw.gov.tw/fhir/StructureDefinition/Encounter-twcore"]
+        },
+        "text": {
+            "status": "generated",
+            "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><h3><b>就醫資料</b></h3><p><b>識別碼</b>：E22081702</p><p><b>就醫現況</b>：finished</p><p><b>就醫分類</b>：pre-admission <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\">( <a href=\"http://terminology.hl7.org/3.1.0/ValueSet-v3-ActEncounterCode.html\">ActEncounterCode</a>#PRENC)</span></p><p><b>就醫型別</b>：Annual diabetes mellitus screening <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\">( <a href=\"http://terminology.hl7.org/3.1.0/CodeSystem-encounter-type.html\">Encounter type</a>#ADMS)</span></p><p><b>服務型別</b>：糖尿病(Diabetes) <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\">( <a href=\"http://terminology.hl7.org/3.1.0/CodeSystem-service-type.html\">Service type</a>#318)</span></p><p><b>病人</b>：<a href=\"Patient-pat-example.html\">Patient/pat-example</a> \"陳加玲\"</p><p><b>出院後的地點</b>：Home <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\">( <a href=\"http://terminology.hl7.org/3.1.0/CodeSystem-discharge-disposition.html\">Discharge disposition</a>#home)</span></p><p><b>就醫發生的地點</b>：<a href=\"Location-hospital-example.html\">Location/hospital-example</a> \"衛生福利部臺北醫院\"</p><h3>參與就醫的健康照護服務提供人員</h3><table class=\"grid\"><tr><td>-</td><td><b>角色</b></td><td><b>參與時段</b></td><td><b>參與人</b></td></tr><tr><td>*</td><td>primary performer <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\">( <a href=\"http://terminology.hl7.org/3.1.0/CodeSystem-v3-ParticipationType.html\">ParticipationType</a>#PPRF)</span></td><td>2022-08-01 05:00:14-0500 --&gt; 2022-08-01 06:00:14-0500</td><td><a href=\"Practitioner-pra-example.html\">Practitioner/pra-example</a> \"王依昇\"</td></tr></table><p><b>就醫的開始和結束時間</b>：2022-08-01 05:00:14-0500 --&gt; 2022-08-01 06:00:14-0500</p><p><b>就醫原因</b>：FH: Diabetes mellitus <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\">( <a href=\"https://browser.ihtsdotools.org/\">SNOMED CT</a>#160303001)</span></p></div>"
+        },
+        "identifier": [
+            {
+                "system": "http://healthcare.example.org/identifiers/enocunter",
+                "value": "E22081702"
+            }
+        ],
+        "status": "finished",
+        "class": {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+            "code": "PRENC"
+        },
+        "type": [
+            {
+                "coding": [
+                    {
+                        "system": "http://terminology.hl7.org/CodeSystem/encounter-type",
+                        "code": "ADMS"
+                    }
+                ]
+            }
+        ],
+        "serviceType": {
+            "coding": [
+                {
+                    "system": "http://terminology.hl7.org/CodeSystem/service-type",
+                    "code": "318",
+                    "display": "Diabetes"
+                }
+            ],
+            "text": "糖尿病"
+        },
+        "subject": {
+            "reference": "Patient/pat-example"
+        },
+        "participant": [
+            {
+                "type": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://terminology.hl7.org/CodeSystem/v3-ParticipationType",
+                                "code": "PPRF"
+                            }
+                        ]
+                    }
+                ],
+                "period": {
+                    "start": "2022-08-01T17:00:14-05:00",
+                    "end": "2022-08-01T18:00:14-05:00"
+                },
+                "individual": {
+                    "reference": "Practitioner/pra-example"
+                }
+            }
+        ],
+        "period": {
+            "start": "2022-08-01T17:00:14-05:00",
+            "end": "2022-08-01T18:00:14-05:00"
+        },
+        "reasonCode": [
+            {
+                "coding": [
+                    {
+                        "system": "http://snomed.info/sct",
+                        "code": "160303001",
+                        "display": "FH: Diabetes mellitus"
+                    }
+                ]
+            }
+        ],
+        "hospitalization": {
+            "dischargeDisposition": {
+                "coding": [
+                    {
+                        "system": "http://terminology.hl7.org/CodeSystem/discharge-disposition",
+                        "code": "home"
+                    }
+                ]
+            }
+        },
+        "location": [
+            {
+                "location": {
+                    "reference": "Location/hospital-example"
+                }
+            }
+        ]
+    }
+]

@@ -1,0 +1,106 @@
+[
+    {
+        "type": "Patient",
+        "cols": [
+            { "label": "id", "key": "patient_id" },
+            { "label": "birthdate", "key": "patient_birthdate" },
+            { "label": "gender", "key": "patient_gender" },
+            { "label": "identifier", "key": "patient_identifier" },
+            { "label": "name", "key": "patient_name" },
+            { "label": "organization", "key": "patient_organization" }
+        ]
+    },
+    {
+        "type": "Condition",
+        "cols": [
+            { "label": "id", "key": "condition_id" },
+            { "label": "clinical-status", "key": "condition_clinical-status" },
+            { "label": "code", "key": "condition_code" },
+            { "label": "subject", "key": "condition_subject" },
+            { "label": "onset-date", "key": "condition_onset-date" },
+            { "label": "abatement-date", "key": "condition_abatement-date" },
+            { "label": "severity", "key": "condition_serverity" }
+        ]
+    },
+    {
+        "type": "DiagnosticReport",
+        "cols": [
+            { "label": "id", "key": "diagnosticreport_id" },
+            { "label": "status", "key": "diagnosticreport_status" },
+            { "label": "subject", "key": "diagnosticreport_subject" },
+            { "label": "category", "key": "diagnosticreport_category" },
+            { "label": "code", "key": "diagnosticreport_code" },
+            { "label": "date", "key": "diagnosticreport_date" }
+        ]
+    },
+    {
+        "type": "Encounter",
+        "cols": [
+            { "label": "id", "key": "encounter_id" },
+            { "label": "class", "key": "encounter_class" },
+            { "label": "date", "key": "encounter_date" },
+            { "label": "identifier", "key": "encounter_identifier" },
+            { "label": "location", "key": "encounter_location" },
+            { "label": "subject", "key": "encounter_subject" },
+            { "label": "status", "key": "encounter_status" }
+        ]
+    },
+    {
+        "type": "Medication",
+        "cols": [
+            { "label": "id", "key": "medication_id" },
+            { "label": "code", "key": "medication_code" }
+        ]
+    },
+    {
+        "type": "MedicationRequest",
+        "cols": [
+            { "label": "id", "key": "medicationrequest_id" },
+            { "label": "status", "key": "medicationrequest_status" },
+            { "label": "intent", "key": "medicationrequest_intent" },
+            { "label": "subject", "key": "medicationrequest_subject" },
+            { "label": "medication", "key": "medicationrequest_medication" },
+            { "label": "encounter", "key": "medicationrequest_encounter" },
+            { "label": "authoredon", "key": "medicationrequest_authoredon" }
+        ]
+    },
+    {
+        "type": "Observation",
+        "cols": [
+            { "label": "id", "key": "observation_id" },
+            { "label": "category", "key": "observation_category" },
+            { "label": "code", "key": "observation_code" },
+            { "label": "date", "key": "observation_date" },
+            { "label": "performer", "key": "observation_performer" },
+            { "label": "status", "key": "observation_status" },
+            { "label": "subject", "key": "observation_subject" }
+        ]
+    },
+    {
+        "type": "Organization",
+        "cols": [
+            { "label": "id", "key": "organization_id" },
+            { "label": "identifier", "key": "organization_identifier" },
+            { "label": "name", "key": "organization_name" },
+            { "label": "type", "key": "organization_type" }
+        ]
+    },
+    {
+        "type": "Practitioner",
+        "cols": [
+            { "label": "id", "key": "practitioner_id" },
+            { "label": "identifier", "key": "practitioner_identifier" },
+            { "label": "name", "key": "practitioner_name" }
+        ]
+    },
+    {
+        "type": "Procedure",
+        "cols": [
+            { "label": "id", "key": "procedure_id" },
+            { "label": "code", "key": "procedure_code" },
+            { "label": "status", "key": "procedure_status" },
+            { "label": "subject", "key": "procedure_subject" },
+            { "label": "date", "key": "procedure_date" }
+        ]
+    }
+]
