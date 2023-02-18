@@ -7,9 +7,9 @@
 **FHIR Pandas** is coded by various programming languages, including Vue.js, Angular.js, and Vanilla.js, to implement the FHIR client. FHIR Pandas provide source code for FHIR developers to develop their FHIR client application. Currently, we have three pandas: 
 ---
  
-1. <a href="https://cylab-tw.github.io/Redpanda-FHIR/html/greenPanda.html" target="_blank"><strong>Green Panda</strong></a> developed by Vue.js <br/>
-2. <a href="https://cylab-tw.github.io/Redpanda-FHIR/angularjs/index.html" target="_blank"><strong>Red Panda</strong></a> developed by angularjs<br/> 
-3. <a href="https://cylab-tw.github.io/Redpanda-FHIR/html/vanillaPanda.html" target="_blank"><strong>Vanilla Panda</strong></a> developed by Vanilla.js
+1. <a href="https://cylab-tw.github.io/FHIR-Pandas/html/greenPanda.html" target="_blank"><strong>Green Panda</strong></a> developed by Vue.js <br/>
+2. <a href="https://cylab-tw.github.io/FHIR-Pandas/angularjs/index.html" target="_blank"><strong>Red Panda</strong></a> developed by angularjs<br/> 
+3. <a href="https://cylab-tw.github.io/FHIR-Pandas/html/vanillaPanda.html" target="_blank"><strong>Vanilla Panda</strong></a> developed by Vanilla.js
 </div>
 
 This project is maintained by DICOM experts from wholeworld and primarily managed by the [Imaging Informatics Lab](https://cylab.dicom.tw).
