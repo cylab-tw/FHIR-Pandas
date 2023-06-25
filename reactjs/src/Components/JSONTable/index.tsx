@@ -15,6 +15,16 @@ import { PractitionerCols } from '../ColsType/PractitionerCols'
 import { OrganizationCols } from '../ColsType/OrganizationCols'
 import { MedicationRequestCols } from '../ColsType/MedicationRequestCols'
 import { ObservationCols } from '../ColsType/ObservationCols'
+import { PractitionerRoleCols } from '../ColsType/PractitionerRoleCols'
+import {AllergyIntoleranceCols} from '../ColsType/AllergyIntoleranceCols'
+import { MedicationStatementCols } from '../ColsType/MedicationStatementCols'
+import { CompositionCols } from '../ColsType/CompositionCols'
+import { MedicationDispenseCols } from '../ColsType/MedicationDispenseCols'
+import { SpecimenCols } from '../ColsType/SpecimenCols'
+import {LocationCols} from '../ColsType/LocationCols'
+import { ImagingStudyCols } from '../ColsType/ImagingStudyCols'
+import { MediaCols } from '../ColsType/MediaCols'
+import { BundleCols } from '../ColsType/BundleCols'
 
 const JSONTable = ({
     openModal,
@@ -46,6 +56,16 @@ const JSONTable = ({
         Organization: OrganizationCols,
         MedicationRequest: MedicationRequestCols,
         Observation: ObservationCols,
+        PractitionerRole: PractitionerRoleCols,
+        AllergyIntolerance: AllergyIntoleranceCols,
+        MedicationStatement: MedicationStatementCols,
+        Composition: CompositionCols,
+        MedicationDispense: MedicationDispenseCols,
+        Specimen: SpecimenCols,        
+        Location: LocationCols,
+        ImagingStudy: ImagingStudyCols,
+        Media: MediaCols,
+        Bundle: BundleCols,
     }
 
     type ColType = {

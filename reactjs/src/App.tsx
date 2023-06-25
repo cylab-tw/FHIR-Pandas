@@ -12,7 +12,7 @@ function App() {
         HTTP: HTTP.GET,
         URLHeader: 'https://',
         URL: 'https://',
-        serverURL: '',
+        serverURL: 'hapi.fhir.tw/fhir',
         resourceType: RESOURCES[0].type,
         id: '',
         token: '',
@@ -29,6 +29,8 @@ function App() {
     const [inputJson, setInputJson] = useState<string>('')
 
     useEffect(() => {
+        //如果沒有URL沒有輸入參數的話，不發送請求
+        if (querys.URL===querys.URLHeader) return ; 
         sendRequest()
     }, [querys.resourceType])
 
