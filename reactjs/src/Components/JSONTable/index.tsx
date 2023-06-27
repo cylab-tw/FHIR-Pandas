@@ -3,6 +3,7 @@ import { Button, Space, Table } from 'antd'
 import { FileTextOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import DATA from './data.json'
 import Resourcesconfigjson from '../../Configs/Resources.config.json'
+import { PlusSquareOutlined, MinusSquareOutlined } from '@ant-design/icons'
 import { HTTP } from '../../Types/Query'
 import { capitalizeFirstLetter } from './../../Utils/string.converter'
 import { PatientCols } from '../ColsType/PatientCols'
@@ -16,12 +17,12 @@ import { OrganizationCols } from '../ColsType/OrganizationCols'
 import { MedicationRequestCols } from '../ColsType/MedicationRequestCols'
 import { ObservationCols } from '../ColsType/ObservationCols'
 import { PractitionerRoleCols } from '../ColsType/PractitionerRoleCols'
-import {AllergyIntoleranceCols} from '../ColsType/AllergyIntoleranceCols'
+import { AllergyIntoleranceCols } from '../ColsType/AllergyIntoleranceCols'
 import { MedicationStatementCols } from '../ColsType/MedicationStatementCols'
 import { CompositionCols } from '../ColsType/CompositionCols'
 import { MedicationDispenseCols } from '../ColsType/MedicationDispenseCols'
 import { SpecimenCols } from '../ColsType/SpecimenCols'
-import {LocationCols} from '../ColsType/LocationCols'
+import { LocationCols } from '../ColsType/LocationCols'
 import { ImagingStudyCols } from '../ColsType/ImagingStudyCols'
 import { MediaCols } from '../ColsType/MediaCols'
 import { BundleCols } from '../ColsType/BundleCols'
@@ -61,7 +62,7 @@ const JSONTable = ({
         MedicationStatement: MedicationStatementCols,
         Composition: CompositionCols,
         MedicationDispense: MedicationDispenseCols,
-        Specimen: SpecimenCols,        
+        Specimen: SpecimenCols,
         Location: LocationCols,
         ImagingStudy: ImagingStudyCols,
         Media: MediaCols,
@@ -102,21 +103,21 @@ const JSONTable = ({
         const children =
             expendedData?.length > 0
                 ? Object.entries(expendedData[0]).map(([key, value]) =>
-                      typeof value === 'object'
-                          ? {
-                                title: capitalizeFirstLetter(key),
-                                dataIndex: key,
-                                key: key,
-                                render: (record: {} | [], row: object, index: number) => {
-                                    return (
-                                        <Button icon={<FileTextOutlined />} onClick={() => handleClick(record)}>
-                                            JSON
-                                        </Button>
-                                    )
-                                },
-                            }
-                          : { title: capitalizeFirstLetter(key), dataIndex: key, key: key, ellipsis: true }
-                  )
+                    typeof value === 'object'
+                        ? {
+                            title: capitalizeFirstLetter(key),
+                            dataIndex: key,
+                            key: key,
+                            render: (record: {} | [], row: object, index: number) => {
+                                return (
+                                    <Button icon={<FileTextOutlined />} onClick={() => handleClick(record)}>
+                                        JSON
+                                    </Button>
+                                )
+                            },
+                        }
+                        : { title: capitalizeFirstLetter(key), dataIndex: key, key: key, ellipsis: true }
+                )
                 : []
         const columns = [{ title: capitalizeFirstLetter(expendedColName), children }]
 
@@ -128,24 +129,24 @@ const JSONTable = ({
             case 'string':
                 return name === 'id'
                     ? {
-                          title: label,
-                          dataIndex: name,
-                          key: name,
-                          fixed: true,
-                          width: 100,
-                          render: (record: {} | [], row: object, index: number) => {
-                              return record || <div>-</div>
-                          },
-                      }
+                        title: label,
+                        dataIndex: name,
+                        key: name,
+                        fixed: true,
+                        width: 100,
+                        render: (record: {} | [], row: object, index: number) => {
+                            return record || <div>-</div>
+                        },
+                    }
                     : {
-                          title: label,
-                          dataIndex: name,
-                          key: name,
-                          width: 150,
-                          render: (record: {} | [], row: object, index: number) => {
-                              return record || <div>-</div>
-                          },
-                      }
+                        title: label,
+                        dataIndex: name,
+                        key: name,
+                        width: 150,
+                        render: (record: {} | [], row: object, index: number) => {
+                            return record || <div>-</div>
+                        },
+                    }
             case 'object':
                 return {
                     title: label,
@@ -171,11 +172,14 @@ const JSONTable = ({
                     render: (record: {}[], row: object, index: number) => {
                         const isClicked = index === expendedIndex && expendedColName === name
                         return record ? (
-                            <a style={{ color: isClicked ? 'red' : '' }} onClick={() => expend(index, name, record)}>
+                            <Button
+                                danger={isClicked}
+                                onClick={() => expend(index, name, record)}
+                                icon={isClicked ? <MinusSquareOutlined /> : <PlusSquareOutlined />} >
                                 {isClicked ? 'Close' : 'Expand'}
-                            </a>
+                            </Button>
                         ) : (
-                            <div>-</div>
+                            <div> - </div>
                         )
                     },
                 }
