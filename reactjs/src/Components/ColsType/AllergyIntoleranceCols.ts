@@ -9,5 +9,5 @@ export const AllergyIntoleranceCols = [
     { label: "Type", name: "type",  type: "object",childrens:CodeableConcept},
     { label: "Category", name: "category", type: "array" },
     { label: "Code", name: "code", type: "object",childrens:CodeableConcept },
-    { label: "Patient", name: "patient", type: "object",childrens: PatientCols },
+    { label: "Patient", name: "patient", type: "Reference" },
 ]
