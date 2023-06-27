@@ -37,17 +37,15 @@ function App() {
 
     useEffect(() => {
         //如果沒有URL沒有輸入參數的話，不發送請求
-        sendRequest()
+        sendRequest();
+
     }, [querys.resourceType])
 
     useEffect(() => {
         if (querys.HTTP !== HTTP.GET) {
-            const { serverURL, resourceType, id } = querys
-            // const URL = `${serverURL}/${resourceType}${id ? `/${id}` : ''}`
             setQuerys({
                 ...querys,
                 parameters: [],
-                // URL,
             })
         }
     }, [querys.HTTP])
@@ -134,7 +132,6 @@ function App() {
     const sendRequest = () => {
         init({ server: querys.serverURL, token: querys.token, resourceType: querys.resourceType })
         const URL = `${querys.URLHeader}${querys.serverURL}/${querys.resourceType}${querys.id ? `/${querys.id}` : ''}`
-        console.log(URL)
         switch (querys.HTTP) {
             case 'GET':
                 GET(URL)
