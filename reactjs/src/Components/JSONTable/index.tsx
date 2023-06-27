@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { Button, Space, Table } from 'antd'
-import { FileTextOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { FileTextOutlined, EditOutlined, DeleteOutlined, BlockOutlined } from '@ant-design/icons'
 import DATA from './data.json'
 import Resourcesconfigjson from '../../Configs/Resources.config.json'
 import { PlusSquareOutlined, MinusSquareOutlined } from '@ant-design/icons'
@@ -27,6 +28,8 @@ import { ImagingStudyCols } from '../ColsType/ImagingStudyCols'
 import { MediaCols } from '../ColsType/MediaCols'
 import { BundleCols } from '../ColsType/BundleCols'
 
+import { QueryType } from '../../Types/Query'
+
 const JSONTable = ({
     openModal,
     changeJSONData,
@@ -38,7 +41,7 @@ const JSONTable = ({
     openModal: () => void
     changeJSONData: (data: [] | {}) => void
     fetchJson: any
-    querys: string
+    querys: QueryType
     updateQueryData: (data: {}) => void
     updateInputJson: (data: string) => void
 }) => {
@@ -203,13 +206,36 @@ const JSONTable = ({
                         return <span>{record ? 'yes' : 'no'}</span>
                     },
                 }
+            case "Reference":
+                return {
+                    title: label,
+                    key: name,
+                    dataIndex: name,
+                    width: 150,
+                    render: (record: { reference?: string }, row: object, index: number) => {
+                        if (!record || !record.reference) {
+                            return <div>-</div>;
+                        }
+                        const recordArray = record.reference ? record.reference.split("/") : [];
+                        return record && record.reference ? (
+                            <Link target="_blank" to={`?Reference=true&ReferenceResourceType=${recordArray[0]}&ReferenceID=${recordArray[1]}&ReferenceServerURL=${querys.serverURL}`}>
+                                <Button icon={<BlockOutlined />} type='primary'>
+                                    Reference
+                                </Button>
+                            </Link >
+                        ) : (
+                            <div>-</div>
+                        );
+                    },
+                };
+
             default:
                 return {}
         }
     }
 
     const columns = [
-        ...columnsJSON[querys].map((col: ColType) => typeSwitch(col)),
+        ...columnsJSON[querys.resourceType].map((col: ColType) => typeSwitch(col)),
         {
             title: 'Actions',
             key: 'operation',

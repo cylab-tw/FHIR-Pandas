@@ -8,13 +8,20 @@ import { message, Space, notification, Tag } from 'antd'
 import JSONModal from './Components/JSONModal'
 
 function App() {
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const urlParamsReference: Boolean = Boolean(urlParams.get("Reference"))
+    const ReferenceResourceType: string = urlParams.get("ReferenceResourceType") || ""
+    const ReferenceID: string = urlParams.get("ReferenceID") || ""
+    const ReferenceServerURL: string = urlParams.get("ReferenceServerURL") || ""
+
     const initialQuerys: QueryType = {
         HTTP: HTTP.GET,
         URLHeader: 'https://',
-        URL: 'https://',
-        serverURL: 'hapi.fhir.tw/fhir',
-        resourceType: RESOURCES[0].type,
-        id: '',
+        serverURL: urlParamsReference ? ReferenceServerURL : 'hapi.fhir.tw/fhir',
+        resourceType: urlParamsReference ? ReferenceResourceType : RESOURCES[0].type,
+        id: urlParamsReference ? ReferenceID : '',
         token: '',
         sortBy: 'id',
         pageCount: 20,
@@ -30,18 +37,17 @@ function App() {
 
     useEffect(() => {
         //如果沒有URL沒有輸入參數的話，不發送請求
-        if (querys.URL===querys.URLHeader) return ; 
         sendRequest()
     }, [querys.resourceType])
 
     useEffect(() => {
         if (querys.HTTP !== HTTP.GET) {
             const { serverURL, resourceType, id } = querys
-            const URL = `${serverURL}/${resourceType}${id ? `/${id}` : ''}`
+            // const URL = `${serverURL}/${resourceType}${id ? `/${id}` : ''}`
             setQuerys({
                 ...querys,
                 parameters: [],
-                URL,
+                // URL,
             })
         }
     }, [querys.HTTP])
@@ -109,15 +115,15 @@ function App() {
 
         // const params = `?${`_sort=${sortBy}`}&${`_count=${pageCount}`}${parameters?.length ? '&' : ''}${parameters?.join('&')}`
         const params = `?${`_count=${pageCount}`}${parameters?.length ? '&' : ''}${parameters?.join('&')}`
-        const URL =
-            querys.HTTP === HTTP.GET
-                ? `${URLHeader}${serverURL}/${resourceType}${id ? `/${id}` : ''}${id ? '' : params}`
-                : `${URLHeader}${serverURL}/${resourceType}${id ? `/${id}` : ''}`
+        // const URL =
+        //     querys.HTTP === HTTP.GET
+        //         ? `${URLHeader}${serverURL}/${resourceType}${id ? `/${id}` : ''}${id ? '' : params}`
+        //         : `${URLHeader}${serverURL}/${resourceType}${id ? `/${id}` : ''}`
 
         setQuerys({
             ...querys,
             [columnName]: value,
-            URL,
+            // URL,
         })
     }
 
@@ -127,9 +133,11 @@ function App() {
 
     const sendRequest = () => {
         init({ server: querys.serverURL, token: querys.token, resourceType: querys.resourceType })
+        const URL = `${querys.URLHeader}${querys.serverURL}/${querys.resourceType}${querys.id ? `/${querys.id}` : ''}`
+        console.log(URL)
         switch (querys.HTTP) {
             case 'GET':
-                GET(querys.URL)
+                GET(URL)
                     .then(res => {
                         let data = []
                         if (querys.id) data = [{ resource: res.data }]
@@ -141,21 +149,21 @@ function App() {
                     .catch(err => openNotification({ statusCode: 404, message: 'Bad Request', color: 'red' }))
                 break
             case 'POST':
-                POST(querys.URL, inputJson)
+                POST(URL, inputJson)
                     .then(res => {
                         responseHandler(res)
                     })
                     .catch(err => openNotification({ statusCode: 404, message: 'Bad Request', color: 'red' }))
                 break
             case 'PUT':
-                PUT(querys.URL, inputJson)
+                PUT(URL, inputJson)
                     .then(res => {
                         responseHandler(res)
                     })
                     .catch(err => openNotification({ statusCode: 404, message: 'Bad Request', color: 'red' }))
                 break
             case 'DELETE':
-                DELETE(querys.URL)
+                DELETE(URL)
                     .then(res => {
                         responseHandler(res)
                     })
@@ -182,7 +190,7 @@ function App() {
                 <div style={{ marginTop: '2rem' }}>
                     <JSONTable
                         openModal={openModal}
-                        querys={querys.resourceType}
+                        querys={querys}
                         changeJSONData={changeJSONData}
                         fetchJson={fetchJson}
                         updateQueryData={updateQueryData}
