@@ -1,3 +1,26 @@
+import { CodeableConcept } from "./index"
+
 export const MediaCols = [
     { label: "ID", name: "id", type: "string" },
+    { label: "BasedOn", name: "basedOn", type: "Reference" },
+    { label: "PartOf", name: "partOf", type: "array" },
+    { label: "Status", name: "status", type: "string" },
+    { label: "Type", name: "type", type: "object" },
+    { label: "Modality", name: "modality", type: "object", childrens: CodeableConcept },
+    { label: "View", name: "view", type: "object", childrens: CodeableConcept },
+    { label: "Subject", name: "subject", type: "Reference" },
+    { label: "Encounter", name: "encounter", type: "Reference" },
+    { label: "CreatedDateTime", name: "createdDateTime", type: "string" },
+    { label: "CreatedPeriod", name: "createdPeriod", type: "object" },
+    { label: "Issued", name: "issued", type: "string" },
+    { label: "Operator", name: "operator", type: "Reference" },
+    { label: "ReasonCode", name: "reasonCode", type: "array" },
+    { label: "BodySite", name: "bodySite", type: "object", childrens: CodeableConcept },
+    { label: "DeviceName", name: "deviceName", type: "string" },
+    { label: "Device", name: "device", type: "Reference" },
+    { label: "Height", name: "height", type: "string" },
+    { label: "Width", name: "width", type: "string" },
+    { label: "Frames", name: "frames", type: "string" },
+    { label: "Duration", name: "duration", type: "string" },
+    { label: "Content", name: "content", type: "Attachment" },
 ]
