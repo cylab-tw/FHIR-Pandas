@@ -15,7 +15,7 @@ let app = new Vue({
                 forceHttps: true
             },
             exampleSetting: {
-                server: 'https://fhir.dicom.tw/fhir',
+                server: 'https://hapi.fhir.org/baseR4',
                 resource: 'Patient',
                 id: '',
                 token: null,
