@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { Button, Space, Table } from 'antd'
-import { FileTextOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { FileTextOutlined, EditOutlined, DeleteOutlined, BlockOutlined } from '@ant-design/icons'
 import DATA from './data.json'
 import Resourcesconfigjson from '../../Configs/Resources.config.json'
+import { PlusSquareOutlined, MinusSquareOutlined } from '@ant-design/icons'
 import { HTTP } from '../../Types/Query'
 import { capitalizeFirstLetter } from './../../Utils/string.converter'
 import { PatientCols } from '../ColsType/PatientCols'
@@ -15,6 +17,18 @@ import { PractitionerCols } from '../ColsType/PractitionerCols'
 import { OrganizationCols } from '../ColsType/OrganizationCols'
 import { MedicationRequestCols } from '../ColsType/MedicationRequestCols'
 import { ObservationCols } from '../ColsType/ObservationCols'
+import { PractitionerRoleCols } from '../ColsType/PractitionerRoleCols'
+import { AllergyIntoleranceCols } from '../ColsType/AllergyIntoleranceCols'
+import { MedicationStatementCols } from '../ColsType/MedicationStatementCols'
+import { CompositionCols } from '../ColsType/CompositionCols'
+import { MedicationDispenseCols } from '../ColsType/MedicationDispenseCols'
+import { SpecimenCols } from '../ColsType/SpecimenCols'
+import { LocationCols } from '../ColsType/LocationCols'
+import { ImagingStudyCols } from '../ColsType/ImagingStudyCols'
+import { MediaCols } from '../ColsType/MediaCols'
+import { BundleCols } from '../ColsType/BundleCols'
+
+import { QueryType } from '../../Types/Query'
 
 const JSONTable = ({
     openModal,
@@ -27,7 +41,7 @@ const JSONTable = ({
     openModal: () => void
     changeJSONData: (data: [] | {}) => void
     fetchJson: any
-    querys: string
+    querys: QueryType
     updateQueryData: (data: {}) => void
     updateInputJson: (data: string) => void
 }) => {
@@ -46,6 +60,16 @@ const JSONTable = ({
         Organization: OrganizationCols,
         MedicationRequest: MedicationRequestCols,
         Observation: ObservationCols,
+        PractitionerRole: PractitionerRoleCols,
+        AllergyIntolerance: AllergyIntoleranceCols,
+        MedicationStatement: MedicationStatementCols,
+        Composition: CompositionCols,
+        MedicationDispense: MedicationDispenseCols,
+        Specimen: SpecimenCols,
+        Location: LocationCols,
+        ImagingStudy: ImagingStudyCols,
+        Media: MediaCols,
+        Bundle: BundleCols,
     }
 
     type ColType = {
@@ -82,21 +106,21 @@ const JSONTable = ({
         const children =
             expendedData?.length > 0
                 ? Object.entries(expendedData[0]).map(([key, value]) =>
-                      typeof value === 'object'
-                          ? {
-                                title: capitalizeFirstLetter(key),
-                                dataIndex: key,
-                                key: key,
-                                render: (record: {} | [], row: object, index: number) => {
-                                    return (
-                                        <Button icon={<FileTextOutlined />} onClick={() => handleClick(record)}>
-                                            JSON
-                                        </Button>
-                                    )
-                                },
-                            }
-                          : { title: capitalizeFirstLetter(key), dataIndex: key, key: key, ellipsis: true }
-                  )
+                    typeof value === 'object'
+                        ? {
+                            title: capitalizeFirstLetter(key),
+                            dataIndex: key,
+                            key: key,
+                            render: (record: {} | [], row: object, index: number) => {
+                                return (
+                                    <Button icon={<FileTextOutlined />} onClick={() => handleClick(record)}>
+                                        JSON
+                                    </Button>
+                                )
+                            },
+                        }
+                        : { title: capitalizeFirstLetter(key), dataIndex: key, key: key, ellipsis: true }
+                )
                 : []
         const columns = [{ title: capitalizeFirstLetter(expendedColName), children }]
 
@@ -108,24 +132,24 @@ const JSONTable = ({
             case 'string':
                 return name === 'id'
                     ? {
-                          title: label,
-                          dataIndex: name,
-                          key: name,
-                          fixed: true,
-                          width: 100,
-                          render: (record: {} | [], row: object, index: number) => {
-                              return record || <div>-</div>
-                          },
-                      }
+                        title: label,
+                        dataIndex: name,
+                        key: name,
+                        fixed: true,
+                        width: 100,
+                        render: (record: {} | [], row: object, index: number) => {
+                            return record || <div>-</div>
+                        },
+                    }
                     : {
-                          title: label,
-                          dataIndex: name,
-                          key: name,
-                          width: 150,
-                          render: (record: {} | [], row: object, index: number) => {
-                              return record || <div>-</div>
-                          },
-                      }
+                        title: label,
+                        dataIndex: name,
+                        key: name,
+                        width: 150,
+                        render: (record: {} | [], row: object, index: number) => {
+                            return record || <div>-</div>
+                        },
+                    }
             case 'object':
                 return {
                     title: label,
@@ -151,11 +175,14 @@ const JSONTable = ({
                     render: (record: {}[], row: object, index: number) => {
                         const isClicked = index === expendedIndex && expendedColName === name
                         return record ? (
-                            <a style={{ color: isClicked ? 'red' : '' }} onClick={() => expend(index, name, record)}>
+                            <Button
+                                danger={isClicked}
+                                onClick={() => expend(index, name, record)}
+                                icon={isClicked ? <MinusSquareOutlined /> : <PlusSquareOutlined />} >
                                 {isClicked ? 'Close' : 'Expand'}
-                            </a>
+                            </Button>
                         ) : (
-                            <div>-</div>
+                            <div> - </div>
                         )
                     },
                 }
@@ -179,13 +206,36 @@ const JSONTable = ({
                         return <span>{record ? 'yes' : 'no'}</span>
                     },
                 }
+            case "Reference":
+                return {
+                    title: label,
+                    key: name,
+                    dataIndex: name,
+                    width: 150,
+                    render: (record: { reference?: string }, row: object, index: number) => {
+                        if (!record || !record.reference) {
+                            return <div>-</div>;
+                        }
+                        const recordArray = record.reference ? record.reference.split("/") : [];
+                        return record && record.reference ? (
+                            <Link target="_blank" to={`?Reference=true&ReferenceResourceType=${recordArray[0]}&ReferenceID=${recordArray[1]}&ReferenceServerURL=${querys.serverURL}`}>
+                                <Button icon={<BlockOutlined />} type='primary'>
+                                    Reference
+                                </Button>
+                            </Link >
+                        ) : (
+                            <div>-</div>
+                        );
+                    },
+                };
+
             default:
                 return {}
         }
     }
 
     const columns = [
-        ...columnsJSON[querys].map((col: ColType) => typeSwitch(col)),
+        ...columnsJSON[querys.resourceType].map((col: ColType) => typeSwitch(col)),
         {
             title: 'Actions',
             key: 'operation',

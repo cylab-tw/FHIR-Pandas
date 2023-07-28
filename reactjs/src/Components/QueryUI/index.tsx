@@ -208,7 +208,7 @@ const QueryUI = ({ querys, valueOnChange, onReset, sendRequest, inputJson, updat
                         <Input
                             addonBefore={<HTTPSelector value={querys.HTTP} valueOnChange={valueOnChange} />}
                             style={{ width: '50vw' }}
-                            value={querys.URL}
+                            value={querys.URLHeader + querys.serverURL + "/" + querys.resourceType + (querys.id ? "/" + querys.id : '')}
                             readOnly
                         />
                         <Button type="primary" onClick={sendRequest}>
