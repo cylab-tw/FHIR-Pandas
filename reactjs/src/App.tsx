@@ -83,9 +83,9 @@ function App() {
     }
 
     const updateInputJson = (data: string) => {
-        const obj = JSON.parse(data)
-        const formatValue = JSON.stringify(obj, undefined, 4)
-        setInputJson(formatValue)
+        // const obj = JSON.parse(data)
+        // const formatValue = JSON.stringify(obj, undefined, 4)
+        setInputJson(data)
     }
 
     const openModal = () => {
